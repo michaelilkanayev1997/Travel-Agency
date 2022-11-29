@@ -13,8 +13,7 @@ export default function App() {
   <Navbar />
   <Hero />
   <Services />
-  <Recommend />
-  <Testimonials />
+  <Recommend /><Testimonials />
   <Footer />
   </>;
 }
