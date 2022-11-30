@@ -11,7 +11,7 @@ export default function App() {
       <AuthContextProvider>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </AuthContextProvider>
     </div>

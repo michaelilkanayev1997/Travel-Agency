@@ -3,9 +3,28 @@ import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
+import { UserAuth } from "./context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
+  const { user, logOut } = UserAuth();
+  const navigate = useNavigate();
+
   const [navbarState, setNavbarState] = useState(false);
+
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const navigateToLogin = () => {
+    // 👇️ navigate to /
+    navigate("/login");
+  };
+
   return (
     <>
       <Nav>
@@ -37,7 +56,11 @@ export default function Navbar() {
             <a href="#testimonials">Testimonials</a>
           </li>
         </ul>
-        <button>Connect</button>
+        {user?.displayName ? (
+          <button onClick={handleSignOut}>LogOut</button>
+        ) : (
+          <button onClick={navigateToLogin}>Sign In</button>
+        )}
       </Nav>
       <ResponsiveNav state={navbarState}>
         <ul>
