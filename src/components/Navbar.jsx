@@ -12,7 +12,7 @@ export default function Navbar() {
         <div className="brand">
           <div className="container">
             <img src={logo} alt="" />
-            Travelo
+            TraveGo
           </div>
           <div className="toggle">
             {navbarState ? (
@@ -25,7 +25,7 @@ export default function Navbar() {
 
         <ul>
           <li>
-            <a href="#home">Home</a>
+            <a href="#hero">Home</a>
           </li>
           <li>
             <a href="#services">About</a>
@@ -42,7 +42,7 @@ export default function Navbar() {
       <ResponsiveNav state={navbarState}>
         <ul>
           <li>
-            <a href="#home" onClick={() => setNavbarState(false)}>
+            <a href="#hero" onClick={() => setNavbarState(false)}>
               Home
             </a>
           </li>
@@ -145,13 +145,13 @@ const Nav = styled.nav`
 const ResponsiveNav = styled.div`
   display: flex;
   position: absolute;
-  z-index: 1;
-  top: ${({ state }) => (state ? "50px" : "-400px")};
+  z-index: 5;
   background-color: white;
   height: 30vh;
   width: 100%;
   align-items: center;
   transition: 0.3s ease-in-out;
+  top: ${({ state }) => (state ? "50px" : "-400px")};
   ul {
     list-style-type: none;
     width: 100%;
