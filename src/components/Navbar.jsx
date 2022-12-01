@@ -3,9 +3,28 @@ import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
+import { UserAuth } from "./context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
+  const { user, logOut } = UserAuth();
+  const navigate = useNavigate();
+
   const [navbarState, setNavbarState] = useState(false);
+
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const navigateToLogin = () => {
+    // 👇️ navigate to /
+    navigate("/login");
+  };
+
   return (
     <>
       <Nav>
@@ -37,7 +56,12 @@ export default function Navbar() {
             <a href="#testimonials">Testimonials</a>
           </li>
         </ul>
-        <button>Connect</button>
+        <h5>{user?.displayName}</h5>
+        {user ? (
+          <button onClick={handleSignOut}>LogOut</button>
+        ) : (
+          <button onClick={navigateToLogin}>Sign In</button>
+        )}
       </Nav>
       <ResponsiveNav state={navbarState}>
         <ul>
@@ -71,6 +95,16 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  h5 {
+    transition: 0.3s ease-in-out;
+    color: #023e8a;
+    font-weight: 2000;
+    font-size: 1.1rem;
+    justify-content: right;
+    display: flex;
+    align-items: right;
+    padding: 0rem -1rem;
+  }
   .brand {
     .container {
       cursor: pointer;
@@ -90,6 +124,7 @@ const Nav = styled.nav`
     display: flex;
     gap: 1rem;
     list-style-type: none;
+
     li {
       a {
         text-decoration: none;
@@ -100,6 +135,7 @@ const Nav = styled.nav`
           color: #023e8a;
         }
       }
+
       &:first-of-type {
         a {
           color: #023e8a;
@@ -108,6 +144,7 @@ const Nav = styled.nav`
       }
     }
   }
+
   button {
     padding: 0.5rem 1rem;
     cursor: pointer;
@@ -132,6 +169,9 @@ const Nav = styled.nav`
       .toggle {
         display: block;
       }
+    }
+    h5 {
+      display: none;
     }
     ul {
       display: none;
