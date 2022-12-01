@@ -56,7 +56,8 @@ export default function Navbar() {
             <a href="#testimonials">Testimonials</a>
           </li>
         </ul>
-        {user?.displayName ? (
+        <h5>{user?.displayName}</h5>
+        {user ? (
           <button onClick={handleSignOut}>LogOut</button>
         ) : (
           <button onClick={navigateToLogin}>Sign In</button>
@@ -94,6 +95,16 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  h5 {
+    transition: 0.3s ease-in-out;
+    color: #023e8a;
+    font-weight: 2000;
+    font-size: 1.1rem;
+    justify-content: right;
+    display: flex;
+    align-items: right;
+    padding: 0rem -1rem;
+  }
   .brand {
     .container {
       cursor: pointer;
@@ -113,6 +124,7 @@ const Nav = styled.nav`
     display: flex;
     gap: 1rem;
     list-style-type: none;
+
     li {
       a {
         text-decoration: none;
@@ -123,6 +135,7 @@ const Nav = styled.nav`
           color: #023e8a;
         }
       }
+
       &:first-of-type {
         a {
           color: #023e8a;
@@ -131,6 +144,7 @@ const Nav = styled.nav`
       }
     }
   }
+
   button {
     padding: 0.5rem 1rem;
     cursor: pointer;
@@ -155,6 +169,9 @@ const Nav = styled.nav`
       .toggle {
         display: block;
       }
+    }
+    h5 {
+      display: none;
     }
     ul {
       display: none;
