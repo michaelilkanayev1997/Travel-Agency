@@ -3,13 +3,13 @@ import { GoogleButton } from "react-google-button";
 import { UserAuth } from "./context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
-  const { googleSignIn, user } = UserAuth();
+  const { googleSignIn, user, signIn } = UserAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleGoogleSignIn = async () => {
     try {
@@ -19,11 +19,15 @@ const Login = () => {
     }
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+
     try {
-      await signInWithEmailAndPassword(UserAuth, email, password);
-    } catch (error) {
-      console.log(error.code);
+      await signIn(email, password);
+    } catch (e) {
+      setError(e.message);
+      console.log(e.message);
     }
   };
 
@@ -58,8 +62,7 @@ const Login = () => {
           </div>
         </div>
       </Section>
-      <h1 className="text-center text-3xl font-bold py-8">Sign in</h1>
-      <div className="max-w-[240px] m-auto py-4">
+      <div>
         <GoogleButton onClick={handleGoogleSignIn} />
       </div>
     </div>
