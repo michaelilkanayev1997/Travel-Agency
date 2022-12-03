@@ -29,10 +29,12 @@ export default function Navbar() {
     <>
       <Nav>
         <div className="brand">
-          <div className="container">
-            <img src={logo} alt="" />
-            TraveGo
-          </div>
+          <a href="/">
+            <div className="container">
+              <img src={logo} alt="" />
+              TraveGo
+            </div>
+          </a>
           <div className="toggle">
             {navbarState ? (
               <VscChromeClose onClick={() => setNavbarState(false)} />
@@ -54,6 +56,9 @@ export default function Navbar() {
           </li>
           <li>
             <a href="#testimonials">Testimonials</a>
+          </li>
+          <li>
+            <a href="/contact">Contact</a>
           </li>
         </ul>
         <h5>{user?.displayName}</h5>
@@ -106,6 +111,9 @@ const Nav = styled.nav`
     padding: 0rem -1rem;
   }
   .brand {
+    a {
+      color: black;
+    }
     .container {
       cursor: pointer;
       display: flex;

@@ -33,8 +33,8 @@ export default function Home() {
   }, []);
   return (
     <div>
-      <ScrollToTop />
       <Navbar />
+      <ScrollToTop />
       <Hero />
       <Services />
       <Recommend />
