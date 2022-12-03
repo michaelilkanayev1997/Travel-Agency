@@ -58,6 +58,7 @@ const Section = styled.section`
   align-items: center;
   h1 {
     margin: 0;
+    font-size: 40px;
   }
   .container {
     height: 50vh;

@@ -38,34 +38,32 @@ const Login = () => {
   }, [navigate, user]);
 
   return (
-    <div>
-      <Section>
-        <div className="container">
-          <h1>Login</h1>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          <div className="button">
-            <button onClick={handleLogin}>Login</button>
-            <span>
-              Not a member ? <Link to="/signup">Sign up</Link>
-            </span>
-          </div>
+    <Section>
+      <div className="container">
+        <h1>Login</h1>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+        <div className="button">
+          <button onClick={handleLogin}>Login</button>
+          <span>
+            Not a member ? <Link to="/signup">Sign up</Link>
+          </span>
         </div>
-      </Section>
-      <div>
-        <GoogleButton onClick={handleGoogleSignIn} />
+        <div>
+          <GoogleButton onClick={handleGoogleSignIn} />
+        </div>
       </div>
-    </div>
+    </Section>
   );
 };
 
@@ -77,6 +75,7 @@ const Section = styled.section`
   align-items: center;
   h1 {
     margin: 0;
+    font-size: 50px;
   }
   .container {
     height: 50vh;
