@@ -72,7 +72,7 @@ const StyledContactForm = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 100vh;
-  background-color: #ccc;
+
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 
