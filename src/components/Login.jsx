@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { GoogleButton } from "react-google-button";
 import { UserAuth } from "./context/AuthContext";
