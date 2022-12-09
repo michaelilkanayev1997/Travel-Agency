@@ -6,27 +6,44 @@ import Footer from "./Footer";
 
 export default function Contact() {
   const [result, showResult] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const isValid = name !== "" && email !== "" && message !== "";
 
   const sendEmail = (e) => {
     e.preventDefault();
-    emailjs
-      .sendForm(
-        "service_fazscnd",
-        "template_o68liqp",
-        e.target,
-        "te068Cv3WEsAMqJuU"
-      )
-      .then((res) => {
-        console.log(res);
-      });
-    e.target.reset();
-    showResult(true);
+    if (isValid) {
+      console.log("input value is NOT empty");
+      emailjs
+        .sendForm(
+          "service_fazscnd",
+          "template_o68liqp",
+          e.target,
+          "te068Cv3WEsAMqJuU"
+        )
+        .then((res) => {
+          console.log(res);
+        });
+      ResterFields();
+      e.target.reset();
+      showResult(true);
+    } else {
+      alert("Please enter all fields");
+    }
   };
 
   const Result = () => {
     return (
       <p>Your message has been successfully sent. we will contact you soon !</p>
     );
+  };
+
+  const ResterFields = () => {
+    setName("");
+    setEmail("");
+    setMessage("");
   };
 
   return (
@@ -39,17 +56,29 @@ export default function Contact() {
             <form onSubmit={sendEmail}>
               <div className="name inp">
                 <label>Name</label>
-                <input type="text" name="name" />
+                <input
+                  type="text"
+                  name="name"
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
 
               <div className="email inp">
                 <label>Email</label>
-                <input type="email" name="email" />
+                <input
+                  type="email"
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
 
               <div className="Message inp">
                 <label>Message</label>
-                <textarea rows="4" name="message"></textarea>
+                <textarea
+                  rows="4"
+                  name="message"
+                  onChange={(e) => setMessage(e.target.value)}
+                ></textarea>
               </div>
 
               <div className="send inp">
@@ -71,15 +100,19 @@ const StyledContactForm = styled.div`
   margin: 0;
   box-sizing: border-box;
   width: 100%;
-  height: 100vh;
+  height: 105vh;
 
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 
   h1 {
+    margin-top: 50px;
     text-align: center;
     margin-bottom: 20px;
     font-size: 50px;
+  }
+  p {
+    font-weight: bold;
   }
 
   .container {
