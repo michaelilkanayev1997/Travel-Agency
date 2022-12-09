@@ -21,6 +21,7 @@ export default function Signup() {
     } catch (e) {
       setError(e.message);
       console.log(e.message);
+      alert(e.message);
     }
   };
 
@@ -52,17 +53,17 @@ export default function Signup() {
 }
 
 const Section = styled.section`
-  height: 100vh;
-  width: 100vw;
+  height: 90vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   h1 {
     margin: 0;
-    font-size: 40px;
+    font-size: 45px;
   }
   .container {
-    height: 50vh;
+    height: 65vh;
     width: 25vw;
     background-color: #2c384a;
     border-radius: 1rem;

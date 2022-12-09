@@ -17,6 +17,7 @@ const Login = () => {
       await googleSignIn();
     } catch (error) {
       console.log(error);
+      alert(error);
     }
   };
 
@@ -29,6 +30,7 @@ const Login = () => {
     } catch (e) {
       setError(e.message);
       console.log(e.message);
+      alert(e.message);
     }
   };
 
@@ -69,8 +71,8 @@ const Login = () => {
 };
 
 const Section = styled.section`
-  height: 100vh;
-  width: 100vw;
+  height: 90vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,7 +81,7 @@ const Section = styled.section`
     font-size: 50px;
   }
   .container {
-    height: 50vh;
+    height: 65vh;
     width: 25vw;
     background-color: #2c384a;
     border-radius: 1rem;
