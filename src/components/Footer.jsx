@@ -9,16 +9,13 @@ export default function Footer() {
       <span>Copyright &copy; 2022 TravelGo. All rights reserved</span>
       <ul className="links">
         <li>
-          <a href="#hero">Home</a>
+          <a href="/">Home</a>
         </li>
         <li>
-          <a href="#services">About</a>
+          <a href="/contact">Contact</a>
         </li>
         <li>
-          <a href="#recommend">Places</a>
-        </li>
-        <li>
-          <a href="#testimonials">Testimonials</a>
+          <a href="/aboutus">About-us</a>
         </li>
       </ul>
       <ul className="social__links">
