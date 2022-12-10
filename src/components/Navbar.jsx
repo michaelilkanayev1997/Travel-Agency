@@ -60,6 +60,9 @@ export default function Navbar() {
           <li>
             <a href="/contact">Contact</a>
           </li>
+          <li>
+            <a href="/aboutus">About-us</a>
+          </li>
         </ul>
         <h5>{user?.displayName}</h5>
         {user ? (
@@ -88,6 +91,11 @@ export default function Navbar() {
           <li>
             <a href="#testimonials" onClick={() => setNavbarState(false)}>
               Testimonials
+            </a>
+          </li>
+          <li>
+            <a href="/aboutus" onClick={() => setNavbarState(false)}>
+              Aboutus
             </a>
           </li>
         </ul>
