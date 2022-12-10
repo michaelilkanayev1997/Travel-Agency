@@ -5,18 +5,21 @@ import styled from "styled-components";
 import { UserAuth } from "./context/AuthContext";
 
 export default function Signup() {
+  const [displayName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const { createUser } = UserAuth();
+  const { createUser, updateDisplayName, createUserDocument } = UserAuth();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     setError("");
     try {
       await createUser(email, password);
+      await updateDisplayName(displayName);
+      await createUserDocument(displayName, email);
       navigate("/");
     } catch (e) {
       setError(e.message);
@@ -29,6 +32,12 @@ export default function Signup() {
     <Section>
       <div className="container">
         <h1>Sign Up</h1>
+        <input
+          type="name"
+          value={displayName}
+          onChange={(e) => setFullName(e.target.value)}
+          placeholder="Full Name"
+        />
         <input
           type="email"
           value={email}
