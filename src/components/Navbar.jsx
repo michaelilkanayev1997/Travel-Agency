@@ -46,16 +46,7 @@ export default function Navbar() {
 
         <ul>
           <li>
-            <a href="#hero">Home</a>
-          </li>
-          <li>
-            <a href="#services">About</a>
-          </li>
-          <li>
-            <a href="#recommend">Places</a>
-          </li>
-          <li>
-            <a href="#testimonials">Testimonials</a>
+            <a href="/">Home</a>
           </li>
           <li>
             <a href="/contact">Contact</a>

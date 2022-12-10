@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import Destination1 from "../assets/Destination1.png";
 import Destination2 from "../assets/Destination2.png";
@@ -56,33 +55,12 @@ export default function Recommend() {
     },
   ];
 
-  const packages = [
-    "The Weekend Break",
-    "The Package Holiday",
-    "The Group Tour",
-    "Long Term Slow Travel",
-  ];
-
-  const [active, setActive] = useState(1);
   return (
     <Section id="recommend">
       <div className="title">
         <h2>Recommended Destinations</h2>
       </div>
-      <div className="packages">
-        <ul>
-          {packages.map((pkg, index) => {
-            return (
-              <li
-                className={active === index + 1 ? "active" : ""}
-                onClick={() => setActive(index + 1)}
-              >
-                {pkg}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+
       <div className="destinations">
         {data.map((destination) => {
           return (
@@ -114,6 +92,8 @@ const Section = styled.section`
   padding: 2rem 0;
   .title {
     text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 30px;
   }
   .packages {
     display: flex;
