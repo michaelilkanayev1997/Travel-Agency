@@ -7,6 +7,7 @@ import Signup from "./components/Signup.jsx";
 import Contact from "./components/Contact.jsx";
 import Aboutus from "./components/Aboutus.jsx";
 import Store from "./components/Store.jsx";
+import Checkout from "./components/Checkout";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/aboutus" element={<Aboutus />} />
         <Route path="/store" element={<Store />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </AuthContextProvider>
   );

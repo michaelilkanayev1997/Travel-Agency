@@ -70,21 +70,6 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a href="#services" onClick={() => setNavbarState(false)}>
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#recommend" onClick={() => setNavbarState(false)}>
-              Places
-            </a>
-          </li>
-          <li>
-            <a href="#testimonials" onClick={() => setNavbarState(false)}>
-              Testimonials
-            </a>
-          </li>
-          <li>
             <a href="/aboutus" onClick={() => setNavbarState(false)}>
               Aboutus
             </a>
@@ -99,6 +84,9 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  border-radius: 0.5rem;
+  padding-top: 1.5rem;
   h5 {
     transition: 0.3s ease-in-out;
     color: #023e8a;
