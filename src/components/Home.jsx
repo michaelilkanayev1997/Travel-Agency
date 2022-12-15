@@ -14,7 +14,7 @@ export default function Home() {
       //Animations
       origin: "top",
       distance: "80px",
-      duration: 2000,
+      duration: 1700,
       reset: true,
     });
     sr.reveal(

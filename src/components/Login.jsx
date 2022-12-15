@@ -12,6 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const { createUserDocument } = UserAuth();
+
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();

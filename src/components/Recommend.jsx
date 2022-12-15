@@ -62,9 +62,9 @@ export default function Recommend() {
       </div>
 
       <div className="destinations">
-        {data.map((destination) => {
+        {data.map((destination, index) => {
           return (
-            <div className="destination">
+            <div className="destination" key={index}>
               <img src={destination.image} alt="" />
               <h3>{destination.title}</h3>
               <p>{destination.subTitle}</p>

@@ -4,12 +4,12 @@ import { collection } from "firebase/firestore";
 import React, { Fragment } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "./Firebase";
-import StoreChildren from "./StoreChildren";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import NightImage from "../assets/moon.png";
 import CalendarImage from "../assets/calendar.png";
+import { Link } from "react-router-dom";
 
 export default function Store() {
   const query = collection(db, "store");
@@ -20,16 +20,17 @@ export default function Store() {
     <Fragment>
       <Navbar />
       <StyledSection>
-        {loading && "Loading..."}
         <section className="property">
           <div className="center">
             <h3>Store</h3>
           </div>
 
+          <div className="Loading">{loading && "Loading..."}</div>
+
           <div className="row">
-            {docs?.map((doc) => {
+            {docs?.map((doc, index) => {
               return (
-                <div className="column">
+                <div className="column" key={index}>
                   <div className="single-property">
                     <div className="card">
                       <div className="property-thumb">
@@ -44,9 +45,13 @@ export default function Store() {
                           <span>{doc.name}</span>
                         </div>
                         <div className="more-property">
-                          <a className="property-btn" href="/">
-                            More Properties
-                          </a>
+                          <Link
+                            className="property-btn"
+                            to="/checkout"
+                            state={{ path: doc }}
+                          >
+                            Read More
+                          </Link>
                         </div>
                       </div>
                       <div className="property-footer">
@@ -84,6 +89,13 @@ export default function Store() {
 }
 
 const StyledSection = styled.section`
+  .Loading {
+    font-size: 55px;
+    font-weight: 500;
+    color: #001d38;
+    font-family: "Nuosu SIL", serif;
+    text-align: center;
+  }
   .property {
     padding-top: 4rem;
     padding-bottom: 1rem;
@@ -131,6 +143,7 @@ const StyledSection = styled.section`
   }
   .property-thumb img {
     width: 350px;
+    height: 225px;
     vertical-align: middle;
     transition: 0.3s;
   }

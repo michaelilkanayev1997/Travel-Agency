@@ -29,7 +29,7 @@ export default function Aboutus() {
                     Our development team is called the "M.V" team, a team made
                     up of two programmers who study at Sami Shamoon College. Our
                     names are Vova Davidzon and Michael Ilkanayev. We live in
-                    israel, 26/25 years old.
+                    israel.
                   </p>
                 </div>
                 {/*skills content */}
@@ -53,8 +53,8 @@ export default function Aboutus() {
                       <div className="progress-wrap">
                         <h3>react</h3>
                         <div className="progress">
-                          <div className="progress-bar react">
-                            <span>95%</span>
+                          <div className="progress-bar React">
+                            <span>100%</span>
                           </div>
                         </div>
                       </div>
@@ -195,7 +195,7 @@ const Styledaboutus = styled.div`
     width: 90%;
   }
   .React {
-    width: 95%;
+    width: 100%;
   }
   .Developer {
     width: 80%;
