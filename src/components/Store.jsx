@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
 import { collection } from "firebase/firestore";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "./Firebase";
 import styled from "styled-components";
@@ -10,76 +11,134 @@ import Footer from "./Footer";
 import NightImage from "../assets/moon.png";
 import CalendarImage from "../assets/calendar.png";
 import { Link } from "react-router-dom";
+import StoreFilterSection from "./StoreFilterSection";
+import moment from "moment";
 
 export default function Store() {
-  const query = collection(db, "store");
+  const [all, setAll] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [search, setSearch] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
+  const [price, setPrice] = useState("");
 
+  const query = collection(db, "store");
   const [docs, loading, error] = useCollectionData(query);
+
+  useEffect(() => {
+    setAll(docs);
+    setFiltered(docs);
+  }, [loading]);
 
   return (
     <Fragment>
       <Navbar />
       <StyledSection>
         <section className="property">
-          <div className="center">
-            <h3>Store</h3>
-          </div>
-
           <div className="Loading">{loading && "Loading..."}</div>
+          {!loading ? (
+            <div className="center">
+              <h3>Store</h3>
+            </div>
+          ) : (
+            loading
+          )}
+
+          {!loading ? (
+            <div className="filter-container">
+              <StoreFilterSection
+                setFiltered={setFiltered}
+                all={all}
+                setSearch={setSearch}
+                setDepartureDate={setDepartureDate}
+                setReturnDate={setReturnDate}
+                setPrice={setPrice}
+              />
+            </div>
+          ) : (
+            loading
+          )}
 
           <div className="row">
-            {docs?.map((doc, index) => {
-              return (
-                <div className="column" key={index}>
-                  <div className="single-property">
-                    <div className="card">
-                      <div className="property-thumb">
-                        <div className="property-tag"> Available </div>
-                        <img src={doc.image} alt={doc.image} />
-                      </div>
+            {filtered
+              ?.filter((doc) => {
+                return search.toLowerCase() === ""
+                  ? filtered
+                  : doc.name.toLowerCase().includes(search);
+              })
+              .filter((doc) => {
+                return price === ""
+                  ? filtered
+                  : doc.price === parseInt(price, 10);
+              })
+              .filter((doc) => {
+                return departureDate === ""
+                  ? filtered
+                  : moment(departureDate)
+                      .format("DD/MM/YYYY")
+                      .includes(doc.flightDate);
+              })
+              .filter((doc) => {
+                return returnDate === ""
+                  ? filtered
+                  : moment(returnDate)
+                      .format("DD/MM/YYYY")
+                      .includes(doc.returndate);
+              })
+              .map((doc, index) => {
+                return (
+                  <div className="column" key={index}>
+                    <div className="single-property">
+                      <div className="card" key={index}>
+                        <div className="property-thumb">
+                          <div className="property-tag"> Available </div>
+                          <img src={doc.image} alt={doc.image} />
+                        </div>
 
-                      <div className="property-content">
-                        <h3>{doc.name}</h3>
-                        <div className="mark">
-                          <i className="fa-solid fa-location-dot"></i>
-                          <span>{doc.name}</span>
+                        <div className="property-content">
+                          <h3>{doc.name}</h3>
+                          <div className="mark">
+                            <i className="fa-solid fa-location-dot"></i>
+                            <span>Flight Company : {doc.flightcompany}</span>
+                          </div>
+                          <div className="more-property">
+                            <Link
+                              className="property-btn"
+                              to="/checkout"
+                              state={{ path: doc }}
+                            >
+                              Read More
+                            </Link>
+                          </div>
                         </div>
-                        <div className="more-property">
-                          <Link
-                            className="property-btn"
-                            to="/checkout"
-                            state={{ path: doc }}
-                          >
-                            Read More
-                          </Link>
+                        <div className="property-footer">
+                          <ul>
+                            <li>
+                              <span
+                                style={{ fontWeight: "bold", fontSize: 17 }}
+                              >
+                                {doc.price}
+                              </span>
+                            </li>
+                            <li>
+                              <img src={NightImage} alt={NightImage} />
+                              <span style={{ fontWeight: "bold" }}>
+                                {doc.nights}
+                              </span>
+                            </li>
+                            <li>
+                              <img src={CalendarImage} alt={CalendarImage} />
+                              <span style={{ fontWeight: "bold" }}>
+                                {doc.flightDate}
+                              </span>
+                            </li>
+                          </ul>
                         </div>
-                      </div>
-                      <div className="property-footer">
-                        <ul>
-                          <li>
-                            <span style={{ fontWeight: "bold" }}>
-                              {doc.price}
-                            </span>
-                          </li>
-                          <li>
-                            <img src={NightImage} alt={NightImage} />
-                            <span style={{ fontWeight: "bold" }}>
-                              {doc.nights}
-                            </span>
-                          </li>
-                          <li>
-                            <img src={CalendarImage} alt={CalendarImage} />
-                            <span style={{ fontWeight: "bold" }}>
-                              {doc.flightDate}
-                            </span>
-                          </li>
-                        </ul>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </section>
       </StyledSection>
@@ -89,6 +148,13 @@ export default function Store() {
 }
 
 const StyledSection = styled.section`
+  min-height: 100vh;
+  .property .filter-container {
+    position: aboulte;
+    padding-top: 1rem;
+    left: -190px;
+    bottom: 50px;
+  }
   .Loading {
     font-size: 55px;
     font-weight: 500;
@@ -157,14 +223,14 @@ const StyledSection = styled.section`
   }
   .property-content h3 {
     margin-bottom: 8px;
-    font-size: 16px;
+    font-size: 20px;
     color: #001d38;
-    font-weight: 500;
+    font-weight: 600;
     font-family: "Popping", sans-serif;
   }
   .mark span {
     font-size: 13px;
-    font-weight: 400;
+    font-weight: 1000;
     color: #919191;
     margin-left: 5px;
     font-family: "Popping", sans-serif;

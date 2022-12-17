@@ -8,6 +8,7 @@ import Contact from "./components/Contact.jsx";
 import Aboutus from "./components/Aboutus.jsx";
 import Store from "./components/Store.jsx";
 import Checkout from "./components/Checkout";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 export default function App() {
   return (
