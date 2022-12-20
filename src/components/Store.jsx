@@ -92,6 +92,12 @@ export default function Store() {
                       <div className="card" key={index}>
                         <div className="property-thumb">
                           <div className="property-tag"> Available </div>
+                          {doc.popular ? (
+                            <div className="property-tag2"> Popular! </div>
+                          ) : (
+                            <div></div>
+                          )}
+
                           <img src={doc.image} alt={doc.image} />
                         </div>
 
@@ -117,7 +123,7 @@ export default function Store() {
                               <span
                                 style={{ fontWeight: "bold", fontSize: 17 }}
                               >
-                                {doc.price}
+                                ${doc.price}
                               </span>
                             </li>
                             <li>
@@ -204,6 +210,19 @@ const StyledSection = styled.section`
     border-radius: 30px;
     font-size: 13px;
     font-weight: 500;
+    z-index: 1;
+    font-family: "Poppins", sans-serif;
+  }
+  .property-tag2 {
+    position: absolute;
+    top: 60px;
+    left: 25px;
+    background: #fdde5c;
+    padding: 8px 14px;
+    color: #001d38;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 580;
     z-index: 1;
     font-family: "Poppins", sans-serif;
   }

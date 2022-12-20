@@ -1,8 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import homeImage from "../assets/hero.png";
+import { UserAuth } from "./context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
+  const { user } = UserAuth();
+  const navigate = useNavigate();
+
+  const navigateToStore = () => {
+    navigate("/store");
+  };
   return (
     <Section id="hero">
       <div className="background">
@@ -11,26 +19,21 @@ export default function Hero() {
       <div className="content">
         <div className="title">
           <h1>TRAVEL TO EXPLORE</h1>
-          <p>
-            lorem dolor rtfd df dsf sfsgsd sdfsd fsdf sdf sdff sdfdsfds dsfsd f
-            sdfsd fsd sdfsd f sdf sdf sdfsd sdfsdfsd
-          </p>
         </div>
-        <div className="search">
-          <div className="container">
-            <label htmlFor="">Where you want to go</label>
-            <input type="text" placeholder="Search your location" />
+        {!user ? (
+          <div className="title">
+            <p>Please Login in order to buy a Ticket to our Trips</p>
           </div>
-          <div className="container">
-            <label htmlFor="">Check-in</label>
-            <input type="date" />
-          </div>
-          <div className="container">
-            <label htmlFor="">Check-out</label>
-            <input type="date" />
-          </div>
-          <button>Explore Now</button>
-        </div>
+        ) : (
+          <>
+            <div className="title">
+              <p>Click the button to explore and buy a trip today</p>
+            </div>
+            <div className="search">
+              <button onClick={navigateToStore}>Explore Now</button>
+            </div>
+          </>
+        )}
       </div>
     </Section>
   );

@@ -15,7 +15,7 @@ export default function Home() {
       origin: "top",
       distance: "80px",
       duration: 1700,
-      reset: true,
+      reset: false,
     });
     sr.reveal(
       `
@@ -27,7 +27,7 @@ export default function Home() {
           footer`,
       {
         opacity: 0,
-        interval: 300,
+        interval: 800,
       }
     );
   }, []);

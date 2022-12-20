@@ -1,28 +1,72 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { useNavigate } from "react-router-dom";
+import { setDoc, doc, updateDoc } from "firebase/firestore";
+import { db } from "./Firebase";
+import { UserAuth } from "./context/AuthContext";
+import styled from "styled-components";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const PaypalCheckoutButton = (props) => {
-  const { product } = props;
-
+  const { product, quantity } = props;
+  const { user } = UserAuth();
   const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const currentAmount = useRef(1);
+
+  useEffect(() => {
+    currentAmount.current = quantity;
+  }, [quantity]);
+
+  async function handleTrip() {
+    if (user) {
+      const TripRef = doc(db, "store", product.id);
+
+      // Set the 'seats' amount field of the destinations
+      await updateDoc(TripRef, {
+        seats: product.seats - currentAmount.current,
+      });
+      console.log("Trip seats amount was updated!");
+    }
+  }
+
+  async function handleUser(orderID) {
+    if (user) {
+      const docRef = doc(db, "users", user.uid);
+
+      const orderNumber = `order-${orderID}`;
+
+      const docData = {
+        [orderNumber]: {
+          TripId: product.id,
+          amount: currentAmount.current,
+          paypalOrderID: orderID,
+          destinations: product.name,
+          price: product.price * currentAmount.current + "$",
+          Orderdate: new Date(),
+        },
+      };
+      await setDoc(docRef, docData, { merge: true });
+      console.log("User document was updated");
+    } else {
+      console.log("no user to update");
+    }
+  }
 
   const handleApprove = (orderID) => {
-    //Call backend function to fulfill order
-
     //if response is success
     setPaidFor(true);
     //Refresh user's account or subscription status
-
-    //if the response is error
-    //setError("Your payment was processed successfully. However, we are unable to fulfill your purchase. please contact us for assistance.");
+    handleUser(orderID);
+    handleTrip();
+    navigate("/");
+    if (paidFor) {
+      //Display success messgae, model or redirect user to success page
+      alert("Thank you for your purchase !");
+    }
   };
-
-  if (paidFor) {
-    //Display success messgae, model or redirect user to success page
-    alert("Thank you for your purchase !");
-  }
 
   if (error) {
     //Display an error message, model or redirect user to error page
@@ -30,58 +74,101 @@ const PaypalCheckoutButton = (props) => {
   }
 
   return (
-    <PayPalScriptProvider
-      options={{ "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID }}
-    >
-      <PayPalButtons
-        style={{
-          layout: "horizontal",
-          height: 48,
-          tagline: false,
-          shape: "pill",
-        }}
-        onClick={(data, actions) => {
-          //Validate on button click, client or server side
-          const NoSeatsLeft = false;
-
-          if (NoSeatsLeft) {
-            setError(
-              "Unfortunately, there are no seats left for this specific trip."
-            );
-            return actions.reject();
-          } else {
-            return actions.resolve();
-          }
-        }}
-        createOrder={(data, actions) => {
-          return actions.order.create({
-            purchase_units: [
-              {
-                description: product.name,
-                amount: {
-                  currency_code: "USD",
-                  value: 250.0,
+    <PayPalScriptProvider>
+      <StyledSection>
+        <PayPalButtons
+          type="button"
+          style={{
+            layout: "horizontal",
+            height: 48,
+            tagline: false,
+            shape: "pill",
+          }}
+          onClick={(data, actions) => {
+            //Validate on button click, client or server side
+            if (product.Seats < 1) {
+              setError(
+                "Unfortunately, there are no seats left for this specific trip."
+              );
+              return actions.reject();
+            } else {
+              return actions.resolve();
+            }
+          }}
+          createOrder={(data, actions) => {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  description: product.name + " Trip",
+                  amount: {
+                    currency_code: "USD",
+                    value: product.price * currentAmount.current,
+                  },
                 },
-              },
-            ],
-          });
-        }}
-        onApprove={async (data, actions) => {
-          const order = await actions.order.capture();
-          console.log("order", order);
+              ],
+            });
+          }}
+          onApprove={async (data, actions) => {
+            const order = await actions.order.capture();
+            console.log("order", order);
 
-          handleApprove(data.orderID);
-        }}
-        onCancel={() => {
-          //Display the cancel message, model or redirect user to cancel page
-        }}
-        onError={(err) => {
-          setError(err);
-          console.log("PayPal error", err);
-        }}
-      />
+            handleApprove(data.orderID);
+          }}
+          onCancel={() => {
+            //Display the cancel message, model or redirect user to cancel page
+          }}
+          onError={(err) => {
+            setError(err);
+            console.log("PayPal error", err);
+          }}
+        />
+      </StyledSection>
     </PayPalScriptProvider>
   );
 };
+
+const StyledSection = styled.section`
+  font-family: "Nuosu SIL", serif;
+  .inputQuantity {
+    display: flex;
+    font-weight: 700;
+    font-family: "Popping", sans-serif;
+    width: 100%;
+    padding-left: 0rem;
+  }
+  .inputQuantity button {
+    font-weight: 700;
+    font-family: "Popping", sans-serif;
+    width: 50px;
+    height: 35px;
+    font-size: 25px;
+    border-radius: 0.6rem;
+    text-align: center;
+    background-color: lightgray;
+    cursor: pointer;
+  }
+  .inputQuantity .quantity {
+    font-weight: 700;
+    font-family: "Popping", sans-serif;
+    width: 50px;
+    font-size: 25px;
+    text-align: center;
+  }
+  .inputQuantity .buttons {
+    display: flex;
+    margin-left: 26rem;
+    margin-top: -3rem;
+  }
+
+  .inputQuantity span {
+    font-family: "Popping", sans-serif;
+    display: inline;
+    color: crimson;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 2rem;
+    margin-top: -3rem;
+  }
+`;
 
 export default PaypalCheckoutButton;

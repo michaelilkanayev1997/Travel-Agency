@@ -1,31 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React, { Fragment, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { db } from "./Firebase";
 import styled from "styled-components";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import PaypalCheckoutButton from "./PaypalCheckoutButton";
+import QuantityChange from "./QuantityChange";
 
 export default function Checkout() {
-  const location = useLocation();
   const [quantity, setQuantity] = useState(1);
 
+  const location = useLocation();
   const doc = location.state.path;
-
-  //quantity Increment/ Decrement in Hooks - start
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity((prevCount) => prevCount - 1);
-    }
-  };
-
-  const handleIncrement = () => {
-    if (quantity < 10) {
-      setQuantity((prevCount) => prevCount + 1);
-    }
-  };
-  //quantity Increment/ Decrement in Hooks - end
 
   return (
     <Fragment>
@@ -59,32 +45,19 @@ export default function Checkout() {
           </div>
         </div>
 
-        <div className="quantityText">quantity:</div>
+        <div className="quantityText">Ticket quantity:</div>
         <div className="inputQuantity">
           <div className="payapl">
             <p className="cart">Secure payment via PayPal</p>
             <div className="paypal-button-container">
-              <PaypalCheckoutButton product={doc} />
+              <PaypalCheckoutButton product={doc} quantity={quantity} />
             </div>
+            <QuantityChange
+              doc={doc}
+              setQuantity={setQuantity}
+              quantity={quantity}
+            />
           </div>
-          <div className="buttons">
-            <button
-              type="button"
-              onClick={handleDecrement}
-              className="inputbutton"
-            >
-              -
-            </button>
-            <div className="quantity">{quantity}</div>
-            <button
-              type="button"
-              onClick={handleIncrement}
-              className="inputbutton"
-            >
-              +
-            </button>
-          </div>
-          <span>Total: ${300 * quantity}</span>
         </div>
       </StyledSection>
       <Footer />
@@ -152,13 +125,6 @@ const StyledSection = styled.section`
     font-size: 35px;
     font-weight: 1200px;
   }
-  .inputQuantity span {
-    color: crimson;
-    font-weight: bold;
-    font-size: 20px;
-    margin-left: 4rem;
-    margin-top: -0.5rem;
-  }
 
   .box p {
     line-height: 1.5;
@@ -221,6 +187,7 @@ const StyledSection = styled.section`
     border-radius: 0.6rem;
     text-align: center;
     background-color: lightgray;
+    cursor: pointer;
   }
   .inputQuantity .quantity {
     font-weight: 700;
@@ -233,15 +200,14 @@ const StyledSection = styled.section`
     font-weight: 700;
     font-family: "Popping", sans-serif;
     font-size: 19px;
-    text-align: center;
-    padding-left: 24rem;
+    padding-left: 50rem;
     padding-bottom: 1rem;
   }
   .paypal-button-container {
     width: 30px;
   }
   .payapl {
-    padding-left: 20rem;
+    padding-left: 24rem;
     padding-bottom: 3rem;
     margin-top: -3rem;
   }
@@ -249,11 +215,7 @@ const StyledSection = styled.section`
     font-size: 20px;
     padding-bottom: 1rem;
     font-weight: bold;
-  }
-  .buttons {
-    display: flex;
-    margin-left: 10rem;
-    margin-top: -0.5rem;
+    margin-left: -2rem;
   }
 
   @media (max-width: 500px) {

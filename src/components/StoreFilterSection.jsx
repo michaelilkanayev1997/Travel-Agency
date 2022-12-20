@@ -12,16 +12,28 @@ export default function StoreFilterSection({
 }) {
   const [active, setActive] = useState("");
 
+  const CheckDepartureDate = (date) => {
+    if (new Date(date) < new Date(new Date().toDateString())) {
+      alert("Please choose a date from the future");
+    } else {
+      setDepartureDate(date);
+    }
+  };
+
   useEffect(() => {
     if (active === "") {
       setFiltered(all);
       return;
     }
-    const filtered = all.filter((doc) => doc.flightcompany.includes(active));
-
-    console.log(filtered);
-
-    setFiltered(filtered);
+    if (active !== "popular") {
+      const filtered = all.filter((doc) => doc.flightcompany.includes(active));
+      setFiltered(filtered);
+      console.log(filtered);
+    } else if (active === "popular") {
+      const filteredPopular = all.filter((doc) => doc.popular === true);
+      setFiltered(filteredPopular);
+      console.log(filteredPopular);
+    }
   }, [active]);
 
   return (
@@ -34,8 +46,8 @@ export default function StoreFilterSection({
           All
         </button>
         <button
-          className={active === "Hong Kong" ? "active" : ""}
-          onClick={() => setActive("Hong Kong")}
+          className={active === "popular" ? "active" : ""}
+          onClick={() => setActive("popular")}
         >
           Popular
         </button>
@@ -86,7 +98,7 @@ export default function StoreFilterSection({
           <p>Departure Date</p>
           <input
             type="date"
-            onChange={(e) => setDepartureDate(e.target.value)}
+            onChange={(e) => CheckDepartureDate(e.target.value)}
           />
         </div>
         <div className="date-filter">
