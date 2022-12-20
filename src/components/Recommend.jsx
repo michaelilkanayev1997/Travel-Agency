@@ -21,7 +21,7 @@ export default function Recommend() {
       <div className="destinations">
         {docs
           ?.filter((doc) => {
-            return doc.nights < 5;
+            return doc.popular === true;
           })
           .map((destination, index) => {
             return (
@@ -35,7 +35,7 @@ export default function Recommend() {
                     <img src={info2} alt="" />
                     <img src={info3} alt="" />
                   </div>
-                  <h4>{destination.price}</h4>
+                  <h4>${destination.price}</h4>
                 </div>
                 <div className="distance">
                   <span>Popular</span>

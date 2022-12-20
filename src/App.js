@@ -12,16 +12,20 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 export default function App() {
   return (
-    <AuthContextProvider>
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/aboutus" element={<Aboutus />} />
-        <Route path="/store" element={<Store />} />
-        <Route path="/checkout" element={<Checkout />} />
-      </Routes>
-    </AuthContextProvider>
+    <PayPalScriptProvider
+      options={{ "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID }}
+    >
+      <AuthContextProvider>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/aboutus" element={<Aboutus />} />
+          <Route path="/store" element={<Store />} />
+          <Route path="/checkout" element={<Checkout />} />
+        </Routes>
+      </AuthContextProvider>
+    </PayPalScriptProvider>
   );
 }
