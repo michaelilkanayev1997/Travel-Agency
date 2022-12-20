@@ -6,6 +6,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "./Firebase";
 
 export default function Testimonials() {
+  //getting reviews (Firestore) documents
   const query = collection(db, "reviews");
   const [docs, loading, error] = useCollectionData(query);
 

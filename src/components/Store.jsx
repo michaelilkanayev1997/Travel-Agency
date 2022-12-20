@@ -22,6 +22,7 @@ export default function Store() {
   const [returnDate, setReturnDate] = useState("");
   const [price, setPrice] = useState("");
 
+  //getting store (Firestore) documents
   const query = collection(db, "store");
   const [docs, loading, error] = useCollectionData(query);
 

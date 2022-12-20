@@ -9,6 +9,7 @@ import info2 from "../assets/info2.png";
 import info3 from "../assets/info3.png";
 
 export default function Recommend() {
+  //getting store (Firestore) documents
   const query = collection(db, "store");
   const [docs, loading, error] = useCollectionData(query);
 
