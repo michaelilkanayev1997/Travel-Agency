@@ -54,7 +54,9 @@ const Section = styled.section`
   .title {
     text-align: center;
     margin-bottom: 1.5rem;
-    font-size: 30px;
+    font-family: "Nuosu SIL", serif;
+    font-size: 35px;
+    font-weight: 500;
   }
   .packages {
     display: flex;
