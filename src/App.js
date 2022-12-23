@@ -8,6 +8,7 @@ import Contact from "./components/Contact.jsx";
 import Aboutus from "./components/Aboutus.jsx";
 import Store from "./components/Store.jsx";
 import Checkout from "./components/Checkout";
+import Invoice from "./components/Invoice.jsx";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/aboutus" element={<Aboutus />} />
           <Route path="/store" element={<Store />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/invoice" element={<Invoice />} />
         </Routes>
       </AuthContextProvider>
     </PayPalScriptProvider>

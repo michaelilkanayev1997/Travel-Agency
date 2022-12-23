@@ -9,6 +9,20 @@ import QuantityChange from "./QuantityChange";
 
 export default function Checkout() {
   const [quantity, setQuantity] = useState(1);
+  const [name, setName] = useState("");
+  const [id, setID] = useState("");
+  const [city, setCity] = useState("");
+  const [street, setStreet] = useState("");
+  const [house, setHouse] = useState("");
+  const [zipcode, setZIPcode] = useState("");
+
+  const isValidInput =
+    name !== "" &&
+    id !== "" &&
+    city !== "" &&
+    street !== "" &&
+    house !== "" &&
+    zipcode !== "";
 
   const location = useLocation();
   const doc = location.state.path;
@@ -20,6 +34,7 @@ export default function Checkout() {
         <div className="center">
           <h3>Checkout</h3>
         </div>
+
         <div className="app">
           <h3>Ticket Details :</h3>
           <div className="details">
@@ -44,21 +59,95 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-
-        <div className="quantityText">Ticket quantity:</div>
-        <div className="inputQuantity">
-          <div className="payapl">
-            <p className="cart">Secure payment via PayPal</p>
-            <div className="paypal-button-container">
-              <PaypalCheckoutButton product={doc} quantity={quantity} />
+        <div className="form-contact">
+          <form>
+            <div className="name inp">
+              <label>Full Name:</label>
+              <input
+                type="text"
+                required="required"
+                name="name"
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
-            <QuantityChange
-              doc={doc}
-              setQuantity={setQuantity}
-              quantity={quantity}
-            />
-          </div>
+
+            <div className="email inp">
+              <label>ID:</label>
+              <input
+                type="id"
+                required="required"
+                name="id"
+                onChange={(e) => setID(e.target.value)}
+              />
+            </div>
+            <div className="city inp">
+              <label>City:</label>
+              <input
+                type="city"
+                required="required"
+                name="city"
+                onChange={(e) => setCity(e.target.value)}
+              />
+            </div>
+          </form>
+          <form>
+            <div className="name inp">
+              <label>Street:</label>
+              <input
+                type="text"
+                required="required"
+                name="Street"
+                onChange={(e) => setStreet(e.target.value)}
+              />
+            </div>
+
+            <div className="email inp">
+              <label>House:</label>
+              <input
+                type="id"
+                required="required"
+                name="housenumber:"
+                onChange={(e) => setHouse(e.target.value)}
+              />
+            </div>
+            <div className="city inp">
+              <label>ZIP code:</label>
+              <input
+                type="zip"
+                required="required"
+                name="zipcode"
+                onChange={(e) => setZIPcode(e.target.value)}
+              />
+            </div>
+          </form>
         </div>
+        {isValidInput ? (
+          <div className="paypaltransition">
+            <div className="quantityText">Ticket quantity:</div>
+            <div className="inputQuantity">
+              <div className="payapl">
+                <div>
+                  <p className="cart">Secure payment via PayPal</p>
+                  <div className="paypal-button-container">
+                    <PaypalCheckoutButton
+                      product={doc}
+                      quantity={quantity}
+                      costumer={{ name, id, city, street, house, zipcode }}
+                    />
+                  </div>
+                </div>
+
+                <QuantityChange
+                  doc={doc}
+                  setQuantity={setQuantity}
+                  quantity={quantity}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="pleaseenter">Please enter all fields</div>
+        )}
       </StyledSection>
       <Footer />
     </Fragment>
@@ -67,6 +156,75 @@ export default function Checkout() {
 
 const StyledSection = styled.section`
   font-family: "Nuosu SIL", serif;
+
+  .pleaseenter {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 21.2vh;
+    font-size: 40px;
+    font-weight: 500;
+    color: #001d38;
+    font-family: "Nuosu SIL", serif;
+    transition: 0.6s ease;
+  }
+  .form-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 30rem;
+    background-position: center;
+    background-size: cover;
+    width: 70%;
+    height: 50vh;
+  }
+  .inp input {
+    border-radius: 10px;
+    font-size: 18px;
+    height: 40px;
+    width: 180px;
+    background-color: rgba(100, 100, 100, 0.1);
+    border: 2px solid black;
+  }
+  ::placeholder {
+    padding-left: 4px;
+    color: black;
+    text-align: left;
+  }
+  .inp {
+    width: 420px;
+    display: flex;
+
+    margin-bottom: 20px;
+  }
+
+  .inp label {
+    padding-right: 1rem;
+    align-self: center;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    width: 130px;
+    color: black;
+    background-color: rgb(300, 255, 255, 0.3);
+    position: relative;
+  }
+  .inp label::after {
+    content: "";
+    width: 0px;
+    transition: 0.3s;
+    left: 0;
+    top: 30px;
+    height: 4px;
+    position: absolute;
+    background-color: rgb(1, 139, 139);
+  }
+
+  .inp label:hover::after {
+    width: 120px;
+  }
+
   .center h3 {
     font-size: 60px;
     font-weight: 500;
@@ -88,6 +246,7 @@ const StyledSection = styled.section`
     width: 100%;
     margin: 50px auto;
     box-shadow: 0 0 5px #ccc;
+    margin-bottom: 0rem;
   }
   .details {
     display: flex;
@@ -113,6 +272,7 @@ const StyledSection = styled.section`
     max-width: 500px;
     min-width: 290px;
     margin: 5px;
+    margin-bottom: 0rem;
   }
   .box .row {
     display: flex;
@@ -204,9 +364,11 @@ const StyledSection = styled.section`
     padding-bottom: 1rem;
   }
   .paypal-button-container {
+    transition: 0.6s ease;
     width: 30px;
   }
   .payapl {
+    transition: 0.8s ease;
     padding-left: 24rem;
     padding-bottom: 3rem;
     margin-top: -3rem;

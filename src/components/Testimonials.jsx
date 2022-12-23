@@ -1,53 +1,36 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import styled from "styled-components";
-import avatarImage from "../assets/avatarImage.jpeg";
+import { collection } from "firebase/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { db } from "./Firebase";
 
 export default function Testimonials() {
+  //getting reviews (Firestore) documents
+  const query = collection(db, "reviews");
+  const [docs, loading, error] = useCollectionData(query);
+
   return (
     <Section id="testimonials">
       <div className="title">
         <h2>Happy Customers</h2>
       </div>
+
       <div className="testimonials">
-        <div className="testimonial">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
-            asperiores eaque.
-          </p>
-          <div className="info">
-            <img src={avatarImage} alt="" />
-            <div className="details">
-              <h4>Kishan Sheth</h4>
-              <span>CEO - Shashaan Web Solutions</span>
+        {docs?.map((doc, index) => {
+          return (
+            <div className="testimonial" key={index}>
+              <p>{doc.review}</p>
+              <div className="info">
+                <img src={doc.image} alt={doc.image} />
+                <div className="details">
+                  <h4>{doc.name}</h4>
+                  <span>Customers</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="testimonial">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
-            asperiores eaque.
-          </p>
-          <div className="info">
-            <img src={avatarImage} alt="" />
-            <div className="details">
-              <h4>Kishan Sheth</h4>
-              <span>CEO - Shashaan Web Solutions</span>
-            </div>
-          </div>
-        </div>
-        <div className="testimonial">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
-            asperiores eaque.
-          </p>
-          <div className="info">
-            <img src={avatarImage} alt="" />
-            <div className="details">
-              <h4>Kishan Sheth</h4>
-              <span>CEO - Shashaan Web Solutions</span>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </Section>
   );
@@ -58,6 +41,9 @@ const Section = styled.section`
   .title {
     text-align: center;
     margin-bottom: 2rem;
+    font-family: "Nuosu SIL", serif;
+    font-size: 35px;
+    font-weight: 500;
   }
   .testimonials {
     display: flex;

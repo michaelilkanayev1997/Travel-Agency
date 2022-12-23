@@ -9,6 +9,7 @@ import info2 from "../assets/info2.png";
 import info3 from "../assets/info3.png";
 
 export default function Recommend() {
+  //getting store (Firestore) documents
   const query = collection(db, "store");
   const [docs, loading, error] = useCollectionData(query);
 
@@ -54,7 +55,9 @@ const Section = styled.section`
   .title {
     text-align: center;
     margin-bottom: 1.5rem;
-    font-size: 30px;
+    font-family: "Nuosu SIL", serif;
+    font-size: 35px;
+    font-weight: 500;
   }
   .packages {
     display: flex;
