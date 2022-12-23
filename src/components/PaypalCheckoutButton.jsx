@@ -9,16 +9,20 @@ import styled from "styled-components";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
 const PaypalCheckoutButton = (props) => {
-  const { product, quantity } = props;
+  const { product, quantity, costumer } = props;
   const { user } = UserAuth();
   const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const currentAmount = useRef(1);
+  const Zipcode = useRef("");
+
+  console.log(Zipcode.current);
 
   useEffect(() => {
     currentAmount.current = quantity;
-  }, [quantity]);
+    Zipcode.current = costumer.zipcode;
+  }, [quantity, costumer.zipcode]);
 
   async function handleTrip() {
     if (user) {
@@ -46,6 +50,12 @@ const PaypalCheckoutButton = (props) => {
           destinations: product.name,
           price: product.price * currentAmount.current + "$",
           Orderdate: new Date(),
+          costumerfullname: costumer.name,
+          costumerId: costumer.id,
+          costumerCity: costumer.city,
+          costumerHouse: costumer.house,
+          costumerStreet: costumer.street,
+          costumerZip: Zipcode.current,
         },
       };
       await setDoc(docRef, docData, { merge: true });
@@ -54,6 +64,11 @@ const PaypalCheckoutButton = (props) => {
       console.log("no user to update");
     }
   }
+  const navigateToInoice = () => {
+    navigate("/invoice", {
+      state: { amount: currentAmount.current, product, costumer, Zipcode },
+    });
+  };
 
   const handleApprove = (orderID) => {
     //if response is success
@@ -61,7 +76,9 @@ const PaypalCheckoutButton = (props) => {
     //Refresh user's account or subscription status
     handleUser(orderID);
     handleTrip();
-    navigate("/");
+
+    navigateToInoice();
+
     if (paidFor) {
       //Display success messgae, model or redirect user to success page
       alert("Thank you for your purchase !");
@@ -86,7 +103,7 @@ const PaypalCheckoutButton = (props) => {
           }}
           onClick={(data, actions) => {
             //Validate on button click, client or server side
-            if (product.Seats < 1) {
+            if (product.seats < 1) {
               setError(
                 "Unfortunately, there are no seats left for this specific trip."
               );

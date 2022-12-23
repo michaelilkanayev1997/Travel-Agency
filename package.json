@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "@paypal/react-paypal-js": "^7.8.2",
+    "@react-pdf/renderer": "^3.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^5.1.0",
     "emailjs-com": "^3.2.0",
     "firebase": "^9.15.0",
     "framer-motion": "^7.10.2",
@@ -18,6 +20,7 @@
     "react-icons": "^4.6.0",
     "react-router-dom": "^6.4.4",
     "react-scripts": "5.0.1",
+    "react-to-print": "^2.14.10",
     "scrollreveal": "^4.0.9",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
