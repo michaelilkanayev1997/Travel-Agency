@@ -9,10 +9,6 @@
 <img src="https://user-images.githubusercontent.com/93651794/222930031-ec3a062f-ac21-4fd4-8564-94d4fcde915c.png" width="35%" height="35%"  ></img> 
 <img src="https://user-images.githubusercontent.com/93651794/222930085-e2e66853-3ed1-4056-a819-c360ad2d9919.png" width="35%" height="35%"  ></img> 
 
-
-
-
-
  A Website for managing the Travel Flights booking at the Travel Agency (local host).
  This is a project I did in REACT with FIREBASE as part of an introductory computer communication course in the third year.
 
