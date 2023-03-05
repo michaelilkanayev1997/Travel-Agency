@@ -30,10 +30,12 @@
    Show notification message after the payment is accepted or failed. After that, a user is
    redirected to the Invoice.
 
+### `Video showing the project:`
+
+   * https://www.youtube.com/watch?v=LKj9u3-7etk
 
 
-
-
+------------------------------------------------------------------------------------------------
 
 
 # Getting Started with Create React App
