@@ -47,7 +47,7 @@
 
 1. Clone the repository:
 
-       git clone https://github.com/BS-PMC-2023/BS-PMC-2023-Team23.git
+       git clone https://github.com/michaelilkanayev1997/Travel-Agency.git
    
 2. Install the dependencies:
 
