@@ -9,8 +9,8 @@
 <img src="https://user-images.githubusercontent.com/93651794/222930031-ec3a062f-ac21-4fd4-8564-94d4fcde915c.png" width="35%" height="35%"  ></img> 
 <img src="https://user-images.githubusercontent.com/93651794/222930085-e2e66853-3ed1-4056-a819-c360ad2d9919.png" width="35%" height="35%"  ></img> 
 
-A Website for managing Travel Flight bookings at a Travel Agency.
- This is a project I did in REACT with FIREBASE as part of an introductory computer communication course in the third year.
+* A Website for managing Travel Flight bookings at a Travel Agency.
+* This is a project I did in REACT with FIREBASE as part of an introductory computer communication course in the third year.
 
 ### `Users can:`
 1. Register and connect conveniently
@@ -33,7 +33,7 @@ A Website for managing Travel Flight bookings at a Travel Agency.
 ### `Video showing the project:`
 
    * https://www.youtube.com/watch?v=LKj9u3-7etk
-   * 
+     
 ## Technologies Used
 
 - React.js
